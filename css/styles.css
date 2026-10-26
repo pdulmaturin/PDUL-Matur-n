@@ -1,0 +1,400 @@
+/* =========================================================
+   PDUL Maturín · Hoja de estilos
+   Estructura pensada para importar a Figma (HTML → capas):
+   flex/grid simples, variables de diseño y anchos fijos
+   ========================================================= */
+
+:root {
+  /* Paleta tomada del logo */
+  --verde: #2a9840;
+  --rojo: #b61918;
+  --amarillo: #fbc51a;
+  --azul-logo: #254091;
+  --teal: #0e8a9a;
+
+  --tinta: #111111;
+  --gris: #5b6068;
+  --gris-claro: #eef0f2;
+  --fondo: #ffffff;
+  --noche: #121920;
+
+  --radio: 24px;
+  --ancho: 1200px;
+  --fuente: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--tinta);
+  background: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+
+.wrap { width: 100%; max-width: var(--ancho); margin: 0 auto; padding: 0 28px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* =========================================================
+   TEXTO JUSTIFICADO SIN "RÍOS"
+   - justify + inter-word reparte el espacio entre palabras
+   - hyphens:auto (lang="es") corta palabras largas con guion
+   - hyphenate-limit-chars evita cortes feos (mín. 6 letras,
+     3 antes y 3 después del guion)
+   - text-wrap:pretty evita líneas viudas/huérfanas
+   - la última línea queda a la izquierda
+   ========================================================= */
+.just {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1;
+  /* base ligeramente más cerrada: al justificar, los espacios se expanden
+     hasta el valor normal y no más allá. js/justificar.js afina cada párrafo. */
+  word-spacing: -0.04em;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 28px; border-radius: 999px;
+  font: 500 15px/1 var(--fuente);
+  border: 0; cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn.p { background: var(--tinta); color: #fff; }
+.btn.p:hover { box-shadow: 0 10px 24px rgba(0, 0, 0, .25); }
+.btn.g { background: rgba(17, 17, 17, .08); color: var(--tinta); }
+.btn.g:hover { background: rgba(17, 17, 17, .14); }
+.btn.wa { background: #25d366; color: #fff; }
+.btn.wa:hover { background: #1fb957; box-shadow: 0 10px 24px rgba(37, 211, 102, .35); }
+.btn.chico { padding: 12px 24px; font-size: 14px; }
+.btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+.encabezado {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+.nav { display: flex; align-items: center; gap: 36px; height: 68px; }
+.marca img { height: 36px; width: auto; }
+.menu { display: flex; gap: 30px; margin-right: auto; }
+.menu a { font-size: 15px; font-weight: 400; color: var(--gris); transition: color .2s; }
+.menu a:hover { color: var(--tinta); }
+.solo-movil { display: none; }
+.burger { display: none; }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 110px 0 120px;
+  text-align: center;
+  background: #fff url("../assets/hero-fondo.jpg") center / cover no-repeat;
+}
+.hero-logo {
+  max-width: 1120px; margin: 0 auto 56px;
+  padding: 30px 40px;
+  border-radius: 28px;
+  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .12));
+}
+.hero-logo img { width: 100%; height: auto; margin: 0 auto; }
+.hero .sub {
+  max-width: 580px; margin: 0 auto 36px;
+  font-size: 18px; font-weight: 400; color: #4a4f57; line-height: 1.7;
+}
+
+/* Vitrina con foto a color */
+.vitrina { padding: 70px 0 20px; }
+.marco {
+  border-radius: 32px; overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .14);
+  aspect-ratio: 16 / 9;
+}
+.marco img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+
+/* =========================================================
+   EJES
+   ========================================================= */
+.ejes { padding: 60px 0 20px; text-align: center; }
+.ejes-t { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--gris); margin-bottom: 20px; }
+.ejes-l { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.ejes-l li {
+  padding: 10px 22px; border-radius: 999px;
+  background: var(--gris-claro); font-size: 15px; font-weight: 500;
+}
+
+/* =========================================================
+   QUIÉNES SOMOS
+   ========================================================= */
+section { position: relative; }
+.quienes { padding: 110px 0 0; }
+.quienes .wrap { max-width: 920px; }
+.dos-tonos {
+  font-size: clamp(30px, 4.4vw, 52px); line-height: 1.15; font-weight: 600;
+  letter-spacing: -.02em; text-align: center; margin-bottom: 36px;
+  text-wrap: balance;
+}
+.dos-tonos span { color: var(--tinta); }
+.dos-tonos em { font-style: normal; color: #9aa0a8; }
+.texto-gris { color: var(--gris); font-size: 17px; line-height: 1.8; }
+.quienes .texto-gris { font-size: 18px; }
+.centro-t { text-align: center; max-width: 640px; margin: 0 auto; text-wrap: balance; }
+.etiqueta {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: 44px 0 56px; font-size: 15px; font-weight: 500; color: var(--gris);
+}
+
+.franja { overflow: hidden; padding-bottom: 20px; }
+.pista { display: flex; gap: 20px; width: max-content; animation: deslizar 60s linear infinite; }
+.pista img { height: 260px; width: auto; border-radius: 22px; object-fit: cover; }
+@keyframes deslizar { to { transform: translateX(-50%); } }
+
+/* =========================================================
+   MISIÓN
+   ========================================================= */
+#mision { padding: 120px 0 40px; }
+.centro {
+  text-align: center; font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.1; font-weight: 600; letter-spacing: -.025em; margin-bottom: 56px;
+}
+.rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.celda {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 28px 26px; border-radius: var(--radio);
+  background: var(--gris-claro);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.celda:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(0, 0, 0, .08); }
+.celda h3 { font-size: 20px; line-height: 1.3; font-weight: 600; }
+.celda p { font-size: 14.5px; color: var(--gris); line-height: 1.7; }
+.pil {
+  align-self: flex-start;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; line-height: 1.35; color: #1b1b1b;
+  background: color-mix(in srgb, var(--c) 22%, #fff);
+  border: 1px solid color-mix(in srgb, var(--c) 55%, #fff);
+}
+.resumen {
+  max-width: 820px; margin: 56px auto 0;
+  font-size: 20px; line-height: 1.75; color: var(--tinta); font-weight: 400;
+}
+
+/* =========================================================
+   VISIÓN
+   ========================================================= */
+.vision { padding: 120px 0; overflow: hidden; }
+.vision::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../assets/mapa-monagas.png") left 40px bottom -60px / 760px no-repeat;
+  opacity: .55; pointer-events: none;
+}
+.dos-col { position: relative; display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+.izq h2 { font-size: clamp(34px, 4.6vw, 56px); line-height: 1.1; font-weight: 600; letter-spacing: -.025em; margin-bottom: 24px; }
+.izq .texto-gris.chico { font-size: 17px; margin-bottom: 28px; }
+.rasgos { display: flex; flex-wrap: wrap; gap: 10px; }
+.rasgos li {
+  padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  background: color-mix(in srgb, var(--c) 20%, #fff);
+  border: 1px solid color-mix(in srgb, var(--c) 55%, #fff);
+}
+.panel-gris { display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 32px; background: var(--gris-claro); }
+.burbuja { padding: 28px 30px; border-radius: 22px; background: #fff; }
+.burbuja h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; line-height: 1.3; }
+.burbuja p { font-size: 15px; color: var(--gris); line-height: 1.75; }
+
+/* =========================================================
+   OBJETIVOS
+   ========================================================= */
+.banda { padding: 120px 0; background: var(--gris-claro); border-radius: 48px 48px 0 0; }
+.banda .centro { margin-bottom: 20px; }
+.banda .centro-t { margin-bottom: 64px; }
+.grupo { font-size: 22px; font-weight: 600; margin: 0 0 22px; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 56px; }
+.trio:last-child { margin-bottom: 0; }
+.blanca { padding: 28px 26px; border-radius: var(--radio); background: #fff; display: flex; flex-direction: column; gap: 12px; }
+.blanca h3 { font-size: 19px; line-height: 1.3; font-weight: 600; }
+.blanca p { font-size: 14.5px; color: var(--gris); line-height: 1.7; }
+.punto { width: 14px; height: 14px; border-radius: 50%; background: var(--c); }
+
+/* =========================================================
+   CITA
+   ========================================================= */
+.cita-sec { padding: 120px 0; }
+.cita-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 56px; align-items: center; max-width: 1100px; }
+blockquote { margin: 0; position: relative; }
+.comilla { display: block; font-size: 120px; line-height: .6; color: var(--verde); font-weight: 700; margin-bottom: 12px; }
+blockquote p { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.5; font-weight: 500; letter-spacing: -.01em; }
+.autor { display: flex; flex-direction: column; gap: 18px; padding-left: 32px; border-left: 2px solid var(--gris-claro); }
+.autor img { height: 40px; width: auto; align-self: flex-start; }
+.autor strong { display: block; font-weight: 600; }
+.autor span { color: var(--gris); font-size: 14px; }
+
+/* =========================================================
+   PARTICIPACIÓN
+   ========================================================= */
+.promo { padding: 40px 0 120px; }
+.promo .wrap { position: relative; display: grid; grid-template-columns: 1fr minmax(0, 640px) 1fr; align-items: center; gap: 20px; }
+.promo-t { text-align: center; display: flex; flex-direction: column; gap: 22px; align-items: center; }
+.promo-t h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.15; font-weight: 600; letter-spacing: -.02em; text-wrap: balance; }
+.deco { width: 100%; max-width: 150px; height: auto; opacity: .9; }
+.deco.izq { justify-self: end; }
+.deco.der { justify-self: start; transform: scaleX(-1); }
+
+/* =========================================================
+   CONTACTO
+   ========================================================= */
+.final { padding: 120px 0; text-align: center; background: var(--gris-claro); border-radius: 48px 48px 0 0; }
+.final h2 { font-size: clamp(36px, 5.4vw, 68px); line-height: 1.08; font-weight: 600; letter-spacing: -.03em; margin-bottom: 22px; }
+.final .centro-t { margin-bottom: 34px; }
+
+/* =========================================================
+   PIE DE PÁGINA (según muestra: logo completo + fichas + PDUL gigante con la estatua)
+   ========================================================= */
+.pie-sec {
+  position: relative; overflow: hidden;
+  margin-top: -48px; padding-top: 80px;
+  background: var(--noche); color: #fff;
+  border-radius: 48px 48px 0 0;
+}
+.pie { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr 1.3fr; gap: 40px; align-items: start; }
+.pie-logo img { width: 100%; max-width: 280px; height: auto; }
+.pie h3 { font-size: 13px; font-weight: 400; color: #8b94a0; margin-bottom: 16px; }
+.pie li { font-size: 14px; line-height: 1.7; margin-bottom: 8px; color: #f1f3f5; }
+.pie a { transition: color .2s; }
+.pie a:hover { color: var(--amarillo); }
+.copy { margin-top: 54px; font-size: 13px; color: #8b94a0; position: relative; z-index: 2; }
+.pie-fichas { position: absolute; right: 6%; top: 150px; width: 64px; height: auto; opacity: .55; z-index: 1; }
+.gigante { position: relative; z-index: 1; margin-top: -30px; padding: 0 5%; display: flex; justify-content: center; }
+.gigante img { width: 100%; max-width: 1100px; height: auto; margin-bottom: -2px; }
+
+/* =========================================================
+   WHATSAPP FLOTANTE
+   ========================================================= */
+.wa-flotante {
+  position: fixed; right: 22px; bottom: 22px; z-index: 60;
+  width: 58px; height: 58px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #25d366; color: #fff;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .28);
+  transition: transform .2s ease;
+}
+.wa-flotante:hover { transform: scale(1.08); }
+
+/* =========================================================
+   ANIMACIÓN AL HACER SCROLL
+   ========================================================= */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pista { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1100px) {
+  .rejilla, .trio { grid-template-columns: repeat(2, 1fr); }
+  .dos-col { grid-template-columns: 1fr; gap: 40px; }
+  .cita-grid { grid-template-columns: 1fr; gap: 36px; }
+  .autor { padding-left: 0; border-left: 0; border-top: 2px solid var(--gris-claro); padding-top: 24px; }
+  .pie { grid-template-columns: 1fr 1fr; }
+  .deco { max-width: 90px; }
+}
+
+@media (max-width: 760px) {
+  .nav { gap: 16px; }
+  .nav > .btn { display: none; }
+  .marca { margin-right: auto; }
+  .burger {
+    display: grid; place-items: center; width: 44px; height: 44px;
+    background: transparent; border: 0; cursor: pointer;
+  }
+  .burger span, .burger span::before, .burger span::after {
+    display: block; width: 22px; height: 2px; background: var(--tinta); border-radius: 2px;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .burger span { position: relative; }
+  .burger span::before, .burger span::after { content: ""; position: absolute; left: 0; }
+  .burger span::before { top: -7px; }
+  .burger span::after { top: 7px; }
+  .burger[aria-expanded="true"] span { background: transparent; }
+  .burger[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
+  .burger[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
+
+  .menu {
+    position: absolute; top: 68px; left: 0; right: 0;
+    flex-direction: column; gap: 0; margin: 0;
+    background: #fff; padding: 8px 28px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, .08);
+    display: none;
+  }
+  .menu.abierto { display: flex; }
+  .menu a { display: block; padding: 14px 0; font-size: 16px; }
+  .solo-movil { display: block; }
+
+  .hero { padding: 70px 0 80px; }
+  .hero-logo { padding: 14px 8px; margin-bottom: 36px; }
+  .hero .sub { font-size: 16px; }
+  .vitrina { padding-top: 44px; }
+  .marco { border-radius: 22px; aspect-ratio: 4 / 3; }
+  .quienes, #mision { padding-top: 80px; }
+  .vision, .banda, .cita-sec, .final { padding: 80px 0; }
+  .rejilla, .trio { grid-template-columns: 1fr; }
+  .pista img { height: 190px; }
+  .promo .wrap { grid-template-columns: 1fr; }
+  .deco { display: none; }
+  .pie { grid-template-columns: 1fr; gap: 28px; }
+  .pie-fichas { width: 44px; top: 70px; }
+  .wa-flotante { right: 16px; bottom: 16px; }
+  .vision::before { background-size: 520px; opacity: .4; }
+}
+
+/* Móviles: más ancho útil para el texto justificado */
+@media (max-width: 480px) {
+  .wrap { padding: 0 18px; }
+  .celda, .blanca { padding: 24px 20px; }
+  .panel-gris { padding: 12px; border-radius: 26px; }
+  .burbuja { padding: 22px 20px; }
+  .celda p, .blanca p, .burbuja p { font-size: 14px; }
+  .resumen, .quienes .texto-gris { font-size: 16px; }
+  blockquote p { font-size: 20px; }
+}
